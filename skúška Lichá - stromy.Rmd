@@ -18,7 +18,7 @@ summary(Orange)
 ```
 
 
-Dáta si môžeme taktiež utriediť. Ja som ich utriedila dáta podľa veku stromov:
+Dáta si môžeme taktiež utriediť. Ja som ich utriedila podľa veku stromov:
 
 ```{r}
 arrange(Orange, desc(age))
@@ -78,7 +78,7 @@ library(tidyr)
 
 
 
-Na analýzu štatistickej významnosti som využila ANOVU analýzu. Porovnávala som vek stromov vzhľadom k počtu letokruhov. 
+Na analýzu štatistickej významnosti som využila ANOVA analýzu. Porovnávala som vek stromov vzhľadom k počtu letokruhov. 
 
 
 ``` {r}
