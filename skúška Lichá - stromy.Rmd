@@ -1,0 +1,95 @@
+---
+title: "Zadanie 2019"
+author: Kristína Lichá
+output: html_notebook
+---
+
+
+
+
+Dáta na analýzu som si vybrala z balíčka datasets, ktorý ponúka RStudio. Konkrétne som si vybrala dataset Orange, ktorý porovnáva počet letokruhov vzhľadom na vek stromu. Taktiež som si zvolila funkciu summary, pomocou ktorej som si zosumarizovala všetky dáta. 
+
+```{r}
+Orange
+head(Orange)
+library(dplyr)
+library(tidyverse)
+summary(Orange)
+```
+
+
+Dáta si môžeme taktiež utriediť. Ja som ich utriedila dáta podľa veku stromov:
+
+```{r}
+arrange(Orange, desc(age))
+```
+
+Alebo podľa počtu letokruhov:
+
+```{r}
+arrange(Orange, desc(circumference))
+```
+
+
+Potom som si dáta vykreslila pomocou funkcie ggplot. Vykreslila som závislosť počtu letokruhov vzhľadom na vek stromu. Keďže je strom kvalitatívna premenná, tak som jej priradila úrovne - farby bodov v grafe. Môžeme si všimnúť, že strom č.4 mal najviac letokruhov. Najmenej letokruhov pribudlo stromu č.3. A vidíme taktiež, že s pribúdajúcim vekom stromov narastá aj počet letokruhov, čo je očakávané.
+
+```{r}
+library(ggplot2)
+ggplot(data = Orange) +
+  geom_point(mapping = aes(x = age, y = circumference, colour = Tree))
+```
+
+Skúsila som zmeniť aj veľkosť bodov. 
+
+```{r}
+library(ggplot2)
+ggplot(data = Orange) +
+  geom_point(mapping = aes(x = age, y = circumference, colour = Tree, size = Tree))
+```
+
+A ešte raz zmena, ale tentokrát s rozdielnymi tvarmi "bodov", čo nám však Rko neodporúča používať pri tomto type premennej.
+
+```{r}
+library(ggplot2)
+ggplot(data = Orange) +
+  geom_point(mapping = aes(x = age, y = circumference, colour = Tree, shape = Tree))
+```
+
+Ďalším spôsobom, ktorým som pridala do grafu viac premenných je ten, že som graf rozdelila do viacerých "faziet" a v každej sa zobrazila iba podmnožina dát. Použila som fuknciu facet_wrap, pričom som graf rzdelila podľa jednej premennej - diéty.
+
+```{r}
+ggplot(data = Orange) +
+  geom_point(mapping = aes(x = age, y = circumference, colour = Tree)) +
+  facet_wrap(~ Tree)
+```
+
+Dáta je taktiež možné zobraziť prostredníctvom boxplotu:
+
+
+```{r}
+ggplot(data = Orange) +
+  geom_boxplot(mapping = aes(x = Tree, y = circumference, color = Tree))
+```
+
+``` {r}
+library(dplyr)
+library(tidyr)
+```
+
+
+
+Na analýzu štatistickej významnosti som využila ANOVU analýzu. Porovnávala som vek stromov vzhľadom k počtu letokruhov. 
+
+
+``` {r}
+anova(fm1 <- lm(age ~ circumference, data = Orange))
+```
+
+Ako môžeme vidieť, hodnota p je 0,001053, teda je to signifikantne významné a vek stromov je podmienený počtom letkruhov.
+
+
+
+V tejto úlohe som sa zaoberala dátami, ktoré hovorili o veku stromov a počte letokruhov. Po analýze môžem povedať, že vek stromov je podmienený počtom letokruhov. 
+
+
+
